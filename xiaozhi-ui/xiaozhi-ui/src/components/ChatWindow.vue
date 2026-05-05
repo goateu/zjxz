@@ -95,7 +95,7 @@ const sendRequest = (message) => {
 
   axios
     .post(
-      '/api/xiaozhi/chat',
+      __API_BASE_URL__ + '/xiaozhi/chat',
       { memoryId: uuid.value, message },
       {
         responseType: 'stream',
