@@ -1,6 +1,7 @@
 package com.atguigu.java.ai.langchain4j.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,9 @@ public class Appointment {
     private String username;
     private String idCard;
     private String department;
+    @TableField("`date`")
     private String date;
+    @TableField("`time`")
     private String time;
     private String doctorName;
 }
