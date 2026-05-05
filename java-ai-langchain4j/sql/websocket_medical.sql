@@ -71,6 +71,20 @@ CREATE TABLE IF NOT EXISTS `queue_entry` (
   INDEX `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 预约挂号表
+CREATE TABLE IF NOT EXISTS `appointment` (
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(50) NOT NULL COMMENT '患者姓名',
+  `id_card` VARCHAR(18) NOT NULL COMMENT '身份证号',
+  `department` VARCHAR(50) NOT NULL COMMENT '科室',
+  `date` VARCHAR(20) NOT NULL COMMENT '预约日期',
+  `time` VARCHAR(10) NOT NULL COMMENT '预约时间（上午/下午）',
+  `doctor_name` VARCHAR(50) COMMENT '医生姓名',
+  `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_username` (`username`),
+  INDEX `idx_id_card` (`id_card`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- 插入测试医生数据
 INSERT INTO `doctor` (`user_id`, `name`, `title`, `department`, `expertise`, `avatar`) VALUES
 (1, '张医生', '主任医师', '心内科', '高血压、冠心病、心律失常', '/avatar/zhang.jpg'),
