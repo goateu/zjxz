@@ -296,7 +296,7 @@ const stopHeartbeat = () => {
 
 const fetchTodayCompletedCount = async () => {
   try {
-    const res = await axios.get(`http://localhost:8080/consult/todayCount/${doctorId}`)
+    const res = await axios.get(`${__API_BASE_URL__}/consult/todayCount/${doctorId}`)
     if (res.data.code === '0') {
       completedCount.value = res.data.data
     }
@@ -363,7 +363,7 @@ const activeSessionData = computed(() => {
 
 const loadMessages = async (sessionId) => {
   try {
-    const res = await axios.get(`http://localhost:8080/consult/${sessionId}/messages`)
+    const res = await axios.get(`${__API_BASE_URL__}/consult/${sessionId}/messages`)
     if (res.data.code === '0' && Array.isArray(res.data.data)) {
       activeMessages.value = res.data.data.map(msg => ({
         content: msg.content,

@@ -75,7 +75,7 @@ onUnmounted(() => {
 
 const loadHistory = async () => {
   try {
-    const res = await axios.get(`http://localhost:8080/consult/${sessionId.value}/messages`)
+    const res = await axios.get(`${__API_BASE_URL__}/consult/${sessionId.value}/messages`)
     if (res.data.code === '0' && Array.isArray(res.data.data)) {
       const patientId = getPatientId()
       messages.value = res.data.data.map(msg => ({

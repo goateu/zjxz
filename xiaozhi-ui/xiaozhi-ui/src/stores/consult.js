@@ -13,7 +13,7 @@ export const useConsultStore = defineStore('consult', {
   actions: {
     async createSession(patientId, doctorId, type) {
       try {
-        const res = await axios.post('http://localhost:8080/consult/create', null, {
+        const res = await axios.post(__API_BASE_URL__ + '/consult/create', null, {
           params: { patientId, doctorId, type }
         })
         if (res.data.code === '0') {

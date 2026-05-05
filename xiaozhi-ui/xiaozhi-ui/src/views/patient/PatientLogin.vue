@@ -99,7 +99,7 @@ const handleLogin = async () => {
   errorMessage.value = ''
 
   try {
-    const res = await axios.post('http://localhost:8080/user/login', null, {
+    const res = await axios.post(__API_BASE_URL__ + '/user/login', null, {
       params: { username: username.value, password: password.value }
     })
     if (res.data.code === '0') {

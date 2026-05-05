@@ -11,7 +11,7 @@ export const useDoctorStore = defineStore('doctor', {
   actions: {
     async login(username, password) {
       try {
-        const res = await axios.post('http://localhost:8080/doctor/login', null, {
+        const res = await axios.post(__API_BASE_URL__ + '/doctor/login', null, {
           params: { username, password }
         })
         if (res.data.code === '0') {
@@ -29,7 +29,7 @@ export const useDoctorStore = defineStore('doctor', {
 
     logout() {
       if (this.doctorInfo?.doctor?.id) {
-        axios.post('http://localhost:8080/doctor/logout', null, {
+        axios.post(__API_BASE_URL__ + '/doctor/logout', null, {
           params: { doctorId: this.doctorInfo.doctor.id }
         })
       }
@@ -40,7 +40,7 @@ export const useDoctorStore = defineStore('doctor', {
 
     async getOnlineDoctors() {
       try {
-        const res = await axios.get('http://localhost:8080/doctor/list')
+        const res = await axios.get(__API_BASE_URL__ + '/doctor/list')
         if (res.data.code === '0') {
           this.onlineDoctors = res.data.data
         }
@@ -59,7 +59,7 @@ export const useDoctorStore = defineStore('doctor', {
 
     heartbeat() {
       if (this.doctorInfo?.doctor?.id) {
-        axios.post('http://localhost:8080/doctor/heartbeat', null, {
+        axios.post(__API_BASE_URL__ + '/doctor/heartbeat', null, {
           params: { doctorId: this.doctorInfo.doctor.id }
         })
       }

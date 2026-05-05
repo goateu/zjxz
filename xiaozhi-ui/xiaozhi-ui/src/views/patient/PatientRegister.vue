@@ -107,7 +107,7 @@ const handleRegister = async () => {
   successMessage.value = ''
 
   try {
-    const res = await axios.post('http://localhost:8080/user/register', form.value)
+    const res = await axios.post(__API_BASE_URL__ + '/user/register', form.value)
     if (res.data.code === '0') {
       successMessage.value = '注册成功！即将跳转登录'
       setTimeout(() => {

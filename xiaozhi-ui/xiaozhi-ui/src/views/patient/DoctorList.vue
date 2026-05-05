@@ -104,7 +104,7 @@ onMounted(async () => {
 const loadDoctors = async () => {
   loading.value = true
   try {
-    const res = await axios.get('http://localhost:8080/doctor/list')
+    const res = await axios.get(__API_BASE_URL__ + '/doctor/list')
     if (res.data.code === '0') {
       doctors.value = res.data.data
     }

@@ -87,7 +87,7 @@ onMounted(async () => {
   if (!sessionId) {
     const patientId = getPatientId()
     try {
-      const res = await axios.post('http://localhost:8080/consult/create', null, {
+      const res = await axios.post(__API_BASE_URL__ + '/consult/create', null, {
         params: { patientId, doctorId: doctorId.value, type: 'CONSULT' }
       })
       if (res.data.code === '0') {

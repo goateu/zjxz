@@ -9,7 +9,7 @@ class WebSocketService {
   }
 
   connect(userId, userType, onConnected, onError) {
-    const socket = new SockJS('http://localhost:8080/ws')
+    const socket = new SockJS(__WS_URL__)
     this.stompClient = Stomp.over(socket)
 
     this.stompClient.connect(
