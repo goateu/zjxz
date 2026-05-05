@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Tag(name = "硅谷小智")
 @RestController
 @RequestMapping("/xiaozhi")
@@ -32,6 +35,7 @@ public class XiaozhiController {
     @Operation(summary = "对话")
     @PostMapping(value = "/chat",produces = "text/stream;charset=utf-8")
     public Flux<String> chat(@RequestBody ChatForm chatForm) {
-        return xiaozhiAgent.chat(chatForm.getMemoryId(),chatForm.getMessage());
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日"));
+        return xiaozhiAgent.chat(chatForm.getMemoryId(), chatForm.getMessage(), currentDate);
     }
 }
