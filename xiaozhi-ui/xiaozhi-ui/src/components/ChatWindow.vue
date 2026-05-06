@@ -39,7 +39,6 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
 const messaggListRef = ref()
@@ -71,7 +70,7 @@ const sendMessage = () => {
   }
 }
 
-const sendRequest = (message) => {
+const sendRequest = async (message) => {
   isSending.value = true
   const userMsg = {
     isUser: true,
@@ -93,30 +92,32 @@ const sendRequest = (message) => {
   const lastMsg = messages.value[messages.value.length - 1]
   scrollToBottom()
 
-  axios
-    .post(
-      __API_BASE_URL__ + '/xiaozhi/chat',
-      { memoryId: uuid.value, message },
-      {
-        responseType: 'stream',
-        onDownloadProgress: (e) => {
-          const fullText = e.event.target.responseText
-          let newText = fullText.substring(lastMsg.content.length)
-          lastMsg.content += newText
-          scrollToBottom()
-        },
-      }
-    )
-    .then(() => {
-      messages.value.at(-1).isTyping = false
-      isSending.value = false
+  try {
+    const response = await fetch(__API_BASE_URL__ + '/xiaozhi/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ memoryId: uuid.value, message }),
     })
-    .catch((error) => {
-      console.error('Stream error:', error)
-      messages.value.at(-1).content = '请求失败，请重试'
-      messages.value.at(-1).isTyping = false
-      isSending.value = false
-    })
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      const text = decoder.decode(value, { stream: true })
+      lastMsg.content += text
+      scrollToBottom()
+    }
+
+    messages.value.at(-1).isTyping = false
+    isSending.value = false
+  } catch (error) {
+    console.error('Stream error:', error)
+    messages.value.at(-1).content = '请求失败，请重试'
+    messages.value.at(-1).isTyping = false
+    isSending.value = false
+  }
 }
 
 const initUUID = () => {
